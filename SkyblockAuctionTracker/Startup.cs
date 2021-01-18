@@ -66,7 +66,7 @@ namespace SkyblockAuctionTracker
                     tp.MaxConcurrency = 10;
                 });
 
-                q.ScheduleJob<BazaarSchedule>(trigger => trigger
+                q.ScheduleJob<BazaarScheduleJob>(trigger => trigger
                     .WithIdentity("BazaarScheduleTrigger")
                     .StartNow()
                     .WithSimpleSchedule(x => x
