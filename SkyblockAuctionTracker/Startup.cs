@@ -66,14 +66,17 @@ namespace SkyblockAuctionTracker
                     tp.MaxConcurrency = 10;
                 });
 
-                q.ScheduleJob<BazaarScheduleJob>(trigger => trigger
-                    .WithIdentity("BazaarScheduleTrigger")
-                    .StartNow()
-                    .WithSimpleSchedule(x => x
-                        .WithInterval(TimeSpan.FromMinutes(1))
-                        .RepeatForever())
-                    .WithDescription("BazaarScheduleTriggerDesc")
-                );
+                if ((bool)Configuration.GetSection("SceduledJobs").GetValue(typeof(bool), "BazaarSceduledJob"))
+                {
+                    q.ScheduleJob<BazaarScheduleJob>(trigger => trigger
+                        .WithIdentity("BazaarScheduleTrigger")
+                        .StartNow()
+                        .WithSimpleSchedule(x => x
+                            .WithInterval(TimeSpan.FromMinutes(1))
+                            .RepeatForever())
+                        .WithDescription("BazaarScheduleTriggerDesc")
+                    );
+                }
             });
 
             // ASP.NET Core hosting
